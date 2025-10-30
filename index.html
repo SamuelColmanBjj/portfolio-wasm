@@ -10,7 +10,7 @@
 
 <script src="cv.js"></script>
 <script>
-ModuleFactory().then(Module => {
+Module().then(instance => {
   // Llamar a la función exportada desde WASM
   const htmlPtr = Module._generate_cv_html();  
   const htmlStr = Module.UTF8ArrayToString(Module.HEAPU8, htmlPtr);
