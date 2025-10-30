@@ -18,7 +18,7 @@ Module.onRuntimeInitialized = () => {
   const htmlPtr = generateCV();
 
   // Convertir puntero a string
-  const htmlStr = Module.UTF8ToString(htmlPtr);
+  const htmlStr = Module['UTF8ToString'](htmlPtr);
 
   document.open();
   document.write(htmlStr);
