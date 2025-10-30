@@ -8,14 +8,10 @@
 <body>
 <div id="root">Cargando CV…</div>
 
-<script type="module">
-import ModuleFactory from './cv.js';
-
-ModuleFactory().then(Module => {
-  // Llamar función WASM directamente usando nombre exportado
+<script src="cv.js"></script>
+<script>
+cv().then(Module => {
   const htmlPtr = Module._generate_cv_html();
-  
-  // Convertir puntero a string usando UTF8ArrayToString
   const htmlStr = Module.UTF8ArrayToString(Module.HEAPU8, htmlPtr);
   
   document.open();
