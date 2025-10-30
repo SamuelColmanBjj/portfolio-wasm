@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CV WASM — Samuel Colman Lombardo</title>
+</head>
+<body>
+<div id="root">Cargando CV…</div>
+
+<script src="cv.js"></script>
+<script>
+Module.onRuntimeInitialized = () => {
+  const htmlPtr = Module._generate_cv_html();
+  const htmlStr = Module.UTF8ToString(htmlPtr);
+  document.open();
+  document.write(htmlStr);
+  document.close();
+  Module._free_buffer(htmlPtr);
+};
+</script>
+</body>
+</html>
