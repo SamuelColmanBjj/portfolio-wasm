@@ -11,11 +11,20 @@
 <script src="cv.js"></script>
 <script>
 Module.onRuntimeInitialized = () => {
-  const htmlPtr = Module._generate_cv_html();
+  // Crea un wrapper JS de la función WASM
+  const generateCV = Module.cwrap('generate_cv_html', 'number', []);
+
+  // Llamar a la función
+  const htmlPtr = generateCV();
+
+  // Convertir puntero a string
   const htmlStr = Module.UTF8ToString(htmlPtr);
+
   document.open();
   document.write(htmlStr);
   document.close();
+
+  // Liberar memoria
   Module._free_buffer(htmlPtr);
 };
 </script>
