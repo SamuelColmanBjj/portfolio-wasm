@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CV WASM — Samuel Colman Lombardo</title>
 </head>
 <body>
 <div id="root">Cargando CV…</div>
 
-<script src="cv.js"></script>
-<script>
-Module.onRuntimeInitialized = () => {
-  const generateCV = Module.cwrap('generate_cv_html', 'number', []);
-  const htmlPtr = generateCV();
-  const htmlStr = Module.UTF8ToString(htmlPtr);
+<script type="module">
+import ModuleFactory from './cv.js';
 
+ModuleFactory().then(Module => {
+  // Llamar función WASM directamente usando nombre exportado
+  const htmlPtr = Module._generate_cv_html();
+  
+  // Convertir puntero a string usando UTF8ArrayToString
+  const htmlStr = Module.UTF8ArrayToString(Module.HEAPU8, htmlPtr);
+  
   document.open();
   document.write(htmlStr);
   document.close();
-
+  
   Module._free_buffer(htmlPtr);
-};
+});
 </script>
 </body>
 </html>
