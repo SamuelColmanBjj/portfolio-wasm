@@ -8,13 +8,11 @@
 <body>
 <div id="root">Cargando CV…</div>
 
-<script src="cv.js"></script>
 <script>
-Module = {
+var Module = {
   onRuntimeInitialized() {
-    // Llamar la función C exportada desde WASM
     const htmlPtr = Module._generate_cv_html();
-    const htmlStr = Module.UTF8ArrayToString(Module.HEAPU8, htmlPtr);
+    const htmlStr = Module.UTF8ToString(htmlPtr);
 
     document.open();
     document.write(htmlStr);
@@ -24,5 +22,8 @@ Module = {
   }
 };
 </script>
+
+<script src="cv.js"></script>
 </body>
 </html>
+
