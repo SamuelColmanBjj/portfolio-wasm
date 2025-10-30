@@ -10,17 +10,19 @@
 
 <script src="cv.js"></script>
 <script>
-Module().then(instance => {
-  // Llamar a la función exportada desde WASM
-  const htmlPtr = Module._generate_cv_html();  
-  const htmlStr = Module.UTF8ArrayToString(Module.HEAPU8, htmlPtr);
+Module = {
+  onRuntimeInitialized() {
+    // Llamar la función C exportada desde WASM
+    const htmlPtr = Module._generate_cv_html();
+    const htmlStr = Module.UTF8ArrayToString(Module.HEAPU8, htmlPtr);
 
-  document.open();
-  document.write(htmlStr);
-  document.close();
+    document.open();
+    document.write(htmlStr);
+    document.close();
 
-  Module._free_buffer(htmlPtr);
-});
+    Module._free_buffer(htmlPtr);
+  }
+};
 </script>
 </body>
 </html>
